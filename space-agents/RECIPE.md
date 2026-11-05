@@ -113,7 +113,7 @@ Programs: `hc`, `git` and `python3`, listed under Watch out.
 ## Done when
 
 - `herdr-app check ~/.config/herdr-app/mods/space-agents` passes.
-- The clone shows one list between the top row and the footer, with spaces and no separate agents list. `ctrl-shift-l` goes back to the old layout, unchanged.
+- The clone shows one list between the top row and the footer, with spaces and no separate agents list. The layout key (`cmd-shift-l` on a Mac) moves to the next layout, and the old one is still there, unchanged.
 - `claude` in a space puts a row under that space in a Working fold, with a spinner and a glowing space icon, and the header's working count goes up by one.
 - After its first turn the row shows a percentage within 20 seconds, and a hover gives the tokens and the window.
 - When that agent asks for a permission, it moves to Needs you in its space, appears in the inbox with the reason, and the header's `!` count goes up by one. `cmd-shift-u` from another space lands on it.

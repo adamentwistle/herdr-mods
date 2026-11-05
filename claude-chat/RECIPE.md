@@ -123,6 +123,7 @@ The rest:
 **Limits.**
 
 - The bars need a trusted folder and a good `/usage` read, or they read `Limits unavailable`.
+- Trust must match the folder exactly, because a headless start runs that folder's hooks and settings. A git worktree of a trusted repo reads `Folder not trusted` until Claude Code has accepted that folder itself.
 - Reset times are the words `/usage` prints, without the time zone. There's no projection of where a limit will land.
 - `/usage` shows a bar only for limits the plan has.
 - A reply from `tail.py` stays under 900,000 bytes. Text is clipped at 16,000 characters and a tool result at 24,000.
@@ -146,6 +147,7 @@ The rest:
 **What tripped the build.**
 
 - `readTextFile` stops at 1 MiB and transcripts run to 55 MB, so they're read through `exec`. `exec` stops at 30 seconds, which is why the watchdog is at 20.
+- A mod has no `setTimeout` or `clearTimeout`. The headless read once raced `exec` against `setTimeout`, and `clearTimeout` threw, so every `/usage` read and the `/` list's commands failed. The watchdog and `exec`'s own limit are what end a slow read.
 - `.child(null)` throws and stops the render. Filter a list of optional parts into `.children()`.
 - An error in a `v_virtual_list` row blanks the list with no error shown. Rows catch their own and draw `Unreadable row`.
 - Use `v_virtual_list`, not `list`, which can't be scrolled from code.
@@ -168,8 +170,8 @@ The rest:
 - A message typed in the box and sent shows as a bubble at 60%, turns solid when it reaches the transcript, and the reply appears below it.
 - During a turn the status row shows and Stop ends the turn. A message sent during the turn appears in the tray.
 - A permission prompt in the session opens a card in the chat with the terminal's own words. Pressing `1` answers it, and the terminal shows the same answer.
-- `/` opens the list. `/usage` in a trusted folder shows the limit bars, and What's using it fills in within 20 seconds. In a folder that isn't trusted it reads `Folder not trusted` and `claude -p` doesn't run.
-- `/permissions` swaps to the terminal with the dialog open.
+- `/` opens the list. `/usage` in a trusted folder shows the limit bars, and What's using it fills in within 20 seconds. If the read fails, the tab says why after `Couldn't read:`, and any limits it did get still show. In a folder that isn't trusted it reads `Folder not trusted` and `claude -p` doesn't run.
+- `/permissions` swaps to the terminal with the dialog open within 10 seconds, because the send has to land first. No bubble is left in the chat.
 - A press on a tool line opens its result. Copy on a code card puts the block on the clipboard.
 - `/model` opens the pad. Picking a row changes this session's model, and a new session keeps its default.
 - A pasted screenshot shows as a thumbnail, goes with the message, and its file leaves `chat-images/`.

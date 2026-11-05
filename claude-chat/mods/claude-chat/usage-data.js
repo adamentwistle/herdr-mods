@@ -82,7 +82,8 @@ export async function loadDetail(exec, folder, trusted) {
   const stdout = await runHeadless(exec, folder, "/usage", trusted);
   const text = usageText(stdout);
   const parsed = parseUsageText(text);
-  if (!parsed.ranges.length) throw new Error("no usage ranges in the text");
+  // The limits can still be good when the rest isn't, so they go with the error.
+  if (!parsed.ranges.length) throw Object.assign(new Error("no usage ranges in the text"), { limits: parsed.limits });
   return parsed;
 }
 
