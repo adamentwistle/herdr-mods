@@ -123,6 +123,7 @@ The rest:
 **Limits.**
 
 - The bars need a trusted folder and a good `/usage` read, or they read `Limits unavailable`.
+- Trust must match the folder exactly, because a headless start runs that folder's hooks and settings. A git worktree of a trusted repo reads `Folder not trusted` until Claude Code has accepted that folder itself.
 - Reset times are the words `/usage` prints, without the time zone. There's no projection of where a limit will land.
 - `/usage` shows a bar only for limits the plan has.
 - A reply from `tail.py` stays under 900,000 bytes. Text is clipped at 16,000 characters and a tool result at 24,000.
