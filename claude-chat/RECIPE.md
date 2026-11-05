@@ -146,6 +146,7 @@ The rest:
 **What tripped the build.**
 
 - `readTextFile` stops at 1 MiB and transcripts run to 55 MB, so they're read through `exec`. `exec` stops at 30 seconds, which is why the watchdog is at 20.
+- A mod has no `setTimeout` or `clearTimeout`. The headless read once raced `exec` against `setTimeout`, and `clearTimeout` threw, so every `/usage` read and the `/` list's commands failed. The watchdog and `exec`'s own limit are what end a slow read.
 - `.child(null)` throws and stops the render. Filter a list of optional parts into `.children()`.
 - An error in a `v_virtual_list` row blanks the list with no error shown. Rows catch their own and draw `Unreadable row`.
 - Use `v_virtual_list`, not `list`, which can't be scrolled from code.
