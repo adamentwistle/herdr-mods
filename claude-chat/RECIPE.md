@@ -168,8 +168,8 @@ The rest:
 - A message typed in the box and sent shows as a bubble at 60%, turns solid when it reaches the transcript, and the reply appears below it.
 - During a turn the status row shows and Stop ends the turn. A message sent during the turn appears in the tray.
 - A permission prompt in the session opens a card in the chat with the terminal's own words. Pressing `1` answers it, and the terminal shows the same answer.
-- `/` opens the list. `/usage` in a trusted folder shows the limit bars, and What's using it fills in within 20 seconds. In a folder that isn't trusted it reads `Folder not trusted` and `claude -p` doesn't run.
-- `/permissions` swaps to the terminal with the dialog open.
+- `/` opens the list. `/usage` in a trusted folder shows the limit bars, and What's using it fills in within 20 seconds. If the read fails, the tab says why after `Couldn't read:`, and any limits it did get still show. In a folder that isn't trusted it reads `Folder not trusted` and `claude -p` doesn't run.
+- `/permissions` swaps to the terminal with the dialog open within 10 seconds, because the send has to land first. No bubble is left in the chat.
 - A press on a tool line opens its result. Copy on a code card puts the block on the clipboard.
 - `/model` opens the pad. Picking a row changes this session's model, and a new session keeps its default.
 - A pasted screenshot shows as a thumbnail, goes with the message, and its file leaves `chat-images/`.

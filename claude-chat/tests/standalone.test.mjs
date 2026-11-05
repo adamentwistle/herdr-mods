@@ -57,3 +57,10 @@ test("only a block that says so is the toggle", () => {
   assert.equal(isToggle({ role: "toggle" }), true);
   for (const props of [null, undefined, {}, { terminal: "t1" }, { role: "chat" }]) assert.equal(isToggle(props), false);
 });
+
+test("usage keeps its limits when the rest of the read fails", async () => {
+  const { loadDetail } = await import("../mods/claude-chat/usage-data.js");
+  const result = "Current week (all models): 13% used · resets Nov 11, 9pm (Europe/London)\n";
+  const exec = async () => ({ code: 0, stdout: `${JSON.stringify({ type: "result", result })}\n` });
+  await assert.rejects(loadDetail(exec, "/x", true), (e) => e.message === "no usage ranges in the text" && e.limits[0].used === 13);
+});
