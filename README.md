@@ -7,3 +7,7 @@ These mods moved to a repo each, so each can be found and starred on its own:
 - [Claude chat](https://github.com/adamentwistle/herdr-claude-chat)
 
 This repo is archived.
+
+## Licence
+
+MIT, see `LICENSE`. Parts come from other projects: see `NOTICE.md`.
